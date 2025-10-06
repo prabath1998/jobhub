@@ -1,4 +1,5 @@
-// import { signOut } from "@/app/utils/auth";
+
+import { signOut } from "@/app/utils/auth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -77,7 +78,7 @@ export function UserDropdown({ email, name, image }: iAppProps) {
           <form
             action={async () => {
               "use server";
-            //   await signOut({ redirectTo: "/" });
+              await signOut({ redirectTo: "/" });
             }}
           >
             <button type="submit" className="w-full flex items-center gap-2">

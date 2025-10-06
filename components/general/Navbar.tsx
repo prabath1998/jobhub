@@ -13,19 +13,23 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-// import { auth } from "@/app/utils/auth";
+import { auth } from "@/app/utils/auth";
 import { ThemeToggle } from "./ThemeToggle";
 import { UserDropdown } from "./UserDropdown";
 
 export async function Navbar() {
-  //   const session = await auth();
-  const session = {
-    user: {
-      name: "John Doe",
-      email: "sasa",
-      image: "https://avatars.githubusercontent.com/u/1500684?v=4",
-    },
-  };
+    const session = await auth();
+  // const session = {
+  //   user: {
+  //     name: "John Doe",
+  //     email: "sasa",
+  //     image: "https://avatars.githubusercontent.com/u/1500684?v=4",
+  //   },
+  // };
+
+  //  const session = {
+   
+  // };
 
   return (
     <nav className="flex justify-between items-center py-5">

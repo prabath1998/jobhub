@@ -1,4 +1,4 @@
-// import { signIn } from "@/app/utils/auth";
+import { signIn } from "@/app/utils/auth";
 import {
   Card,
   CardContent,
@@ -70,9 +70,9 @@ export function LoginForm() {
               <form
                 action={async () => {
                   "use server";
-                //   await signIn("github", {
-                //     redirectTo: "/onboarding",
-                //   });
+                  await signIn("github", {
+                    redirectTo: "/onboarding",
+                  });
                 }}
               >
                 <GeneralSubmitButton
@@ -85,9 +85,9 @@ export function LoginForm() {
               <form
                 action={async () => {
                   "use server";
-                //   await signIn("google", {
-                //     redirectTo: "/onboarding",
-                //   });
+                  await signIn("google", {
+                    redirectTo: "/onboarding",
+                  });
                 }}
               >
                 <GeneralSubmitButton
