@@ -21,8 +21,8 @@ import { XIcon } from "lucide-react";
 
 import PDFImage from "@/public/pdf.png";
 import Image from "next/image";
-import { UploadDropzone } from "@/components/general/UploadThingReExport";
-import { createJobSeeker } from "@/app/actions";
+// import { UploadDropzone } from "@/components/general/UploadThingReExport";
+// import { createJobSeeker } from "@/app/actions";
 
 export default function JobSeekerForm() {
   const form = useForm<z.infer<typeof jobSeekerSchema>>({
@@ -37,7 +37,7 @@ export default function JobSeekerForm() {
   async function onSubmit(values: z.infer<typeof jobSeekerSchema>) {
     try {
       setPending(true);
-      await createJobSeeker(values);
+      // await createJobSeeker(values);
     } catch (error) {
       if (error instanceof Error && error.message !== "NEXT_REDIRECT") {
         toast.error("Something went wrong. Please try again.");
@@ -110,17 +110,19 @@ export default function JobSeekerForm() {
                       </Button>
                     </div>
                   ) : (
-                    <UploadDropzone
-                      endpoint="resumeUploader"
-                      onClientUploadComplete={(res) => {
-                        field.onChange(res[0].url);
-                        toast.success("Resume uploaded successfully!");
-                      }}
-                      onUploadError={() => {
-                        toast.error("Something went wrong. Please try again.");
-                      }}
-                      className="ut-button:bg-primary ut-button:text-white ut-button:hover:bg-primary/90 ut-label:text-muted-foreground ut-allowed-content:text-muted-foreground border-primary"
-                    />
+                    // <UploadDropzone
+                    //   endpoint="resumeUploader"
+                    //   onClientUploadComplete={(res) => {
+                    //     field.onChange(res[0].url);
+                    //     toast.success("Resume uploaded successfully!");
+                    //   }}
+                    //   onUploadError={() => {
+                    //     toast.error("Something went wrong. Please try again.");
+                    //   }}
+                    //   className="ut-button:bg-primary ut-button:text-white ut-button:hover:bg-primary/90 ut-label:text-muted-foreground ut-allowed-content:text-muted-foreground border-primary"
+                    // />
+
+                    <p>Test</p>
                   )}
                 </div>
               </FormControl>

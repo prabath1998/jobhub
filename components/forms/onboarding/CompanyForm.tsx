@@ -20,7 +20,7 @@ import { XIcon } from "lucide-react";
 import { toast } from "sonner";
 import { companySchema } from "@/app/utils/zodSchemas";
 import { useState } from "react";
-import { createCompany } from "@/app/actions";
+// import { createCompany } from "@/app/actions";
 
 import {
   Select,
@@ -32,7 +32,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { countryList } from "@/app/utils/countriesList";
-import { UploadDropzone } from "@/components/general/UploadThingReExport";
+// import { UploadDropzone } from "@/components/general/UploadThingReExport";
 
 export default function CompanyForm() {
   const form = useForm<z.infer<typeof companySchema>>({
@@ -52,7 +52,7 @@ export default function CompanyForm() {
   async function onSubmit(values: z.infer<typeof companySchema>) {
     try {
       setPending(true);
-      await createCompany(values);
+      // await createCompany(values);
     } catch (error) {
       console.log(error);
       if (error instanceof Error && error.message !== "NEXT_REDIRECT") {
@@ -201,17 +201,18 @@ export default function CompanyForm() {
                       </Button>
                     </div>
                   ) : (
-                    <UploadDropzone
-                      endpoint="imageUploader"
-                      onClientUploadComplete={(res) => {
-                        field.onChange(res[0].url);
-                        toast.success("Logo uploaded successfully!");
-                      }}
-                      onUploadError={() => {
-                        toast.error("Something went wrong. Please try again.");
-                      }}
-                      className="ut-button:bg-primary ut-button:text-white ut-button:hover:bg-primary/90 ut-label:text-muted-foreground ut-allowed-content:text-muted-foreground border-primary"
-                    />
+                    <p>Test</p>
+                    // <UploadDropzone
+                    //   endpoint="imageUploader"
+                    //   onClientUploadComplete={(res) => {
+                    //     field.onChange(res[0].url);
+                    //     toast.success("Logo uploaded successfully!");
+                    //   }}
+                    //   onUploadError={() => {
+                    //     toast.error("Something went wrong. Please try again.");
+                    //   }}
+                    //   className="ut-button:bg-primary ut-button:text-white ut-button:hover:bg-primary/90 ut-label:text-muted-foreground ut-allowed-content:text-muted-foreground border-primary"
+                    // />
                   )}
                 </div>
               </FormControl>
