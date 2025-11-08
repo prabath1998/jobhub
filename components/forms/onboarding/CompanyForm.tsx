@@ -32,6 +32,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { countryList } from "@/app/utils/countriesList";
+import { UploadDropzone } from "@/components/general/UploadThingReExport";
 // import { UploadDropzone } from "@/components/general/UploadThingReExport";
 
 export default function CompanyForm() {
@@ -201,18 +202,18 @@ export default function CompanyForm() {
                       </Button>
                     </div>
                   ) : (
-                    <p>Test</p>
-                    // <UploadDropzone
-                    //   endpoint="imageUploader"
-                    //   onClientUploadComplete={(res) => {
-                    //     field.onChange(res[0].url);
-                    //     toast.success("Logo uploaded successfully!");
-                    //   }}
-                    //   onUploadError={() => {
-                    //     toast.error("Something went wrong. Please try again.");
-                    //   }}
-                    //   className="ut-button:bg-primary ut-button:text-white ut-button:hover:bg-primary/90 ut-label:text-muted-foreground ut-allowed-content:text-muted-foreground border-primary"
-                    // />
+                    // <p>Test</p>
+                    <UploadDropzone
+                      endpoint="imageUploader"
+                      onClientUploadComplete={(res) => {
+                        field.onChange(res[0].url);
+                        toast.success("Logo uploaded successfully!");
+                      }}
+                      onUploadError={() => {
+                        toast.error("Something went wrong. Please try again.");
+                      }}
+                      className="ut-button:bg-primary ut-button:text-white ut-button:hover:bg-primary/90 ut-label:text-muted-foreground ut-allowed-content:text-muted-foreground border-primary"
+                    />
                   )}
                 </div>
               </FormControl>
