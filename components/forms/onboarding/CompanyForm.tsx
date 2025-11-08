@@ -20,7 +20,7 @@ import { XIcon } from "lucide-react";
 import { toast } from "sonner";
 import { companySchema } from "@/app/utils/zodSchemas";
 import { useState } from "react";
-// import { createCompany } from "@/app/actions";
+import { createCompany } from "@/app/actions";
 
 import {
   Select,
@@ -51,9 +51,9 @@ export default function CompanyForm() {
   const [pending, setPending] = useState(false);
 
   async function onSubmit(values: z.infer<typeof companySchema>) {
-    try {
+    try {      
       setPending(true);
-      // await createCompany(values);
+      await createCompany(values);
     } catch (error) {
       console.log(error);
       if (error instanceof Error && error.message !== "NEXT_REDIRECT") {
