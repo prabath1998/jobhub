@@ -36,7 +36,7 @@ export const ourFileRouter = {
 
   resumeUploader: f({
     "application/pdf": {
-      maxFileSize: "2MB",
+      maxFileSize: "4MB",
       maxFileCount: 1,
     },
   })
