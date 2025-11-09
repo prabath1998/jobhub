@@ -58,37 +58,37 @@ export async function createCompany(data: z.infer<typeof companySchema>) {
   return redirect("/");
 }
 
-// export async function createJobSeeker(data: z.infer<typeof jobSeekerSchema>) {
-//   const user = await requireUser();
+export async function createJobSeeker(data: z.infer<typeof jobSeekerSchema>) {
+  const user = await requireUser();
 
-//   // Access the request object so Arcjet can analyze it
-//   const req = await request();
-//   // Call Arcjet protect
-//   const decision = await aj.protect(req);
+  // Access the request object so Arcjet can analyze it
+  // const req = await request();
+  // // Call Arcjet protect
+  // const decision = await aj.protect(req);
 
-//   if (decision.isDenied()) {
-//     throw new Error("Forbidden");
-//   }
+  // if (decision.isDenied()) {
+  //   throw new Error("Forbidden");
+  // }
 
-//   const validatedData = jobSeekerSchema.parse(data);
+  const validatedData = jobSeekerSchema.parse(data);
 
-//   await prisma.user.update({
-//     where: {
-//       id: user.id,
-//     },
-//     data: {
-//       onboardingCompleted: true,
-//       userType: "JOB_SEEKER",
-//       JobSeeker: {
-//         create: {
-//           ...validatedData,
-//         },
-//       },
-//     },
-//   });
+  await prisma.user.update({
+    where: {
+      id: user.id,
+    },
+    data: {
+      onboardingCompleted: true,
+      userType: "JOB_SEEKER",
+      JobSeeker: {
+        create: {
+          ...validatedData,
+        },
+      },
+    },
+  });
 
-//   return redirect("/");
-// }
+  return redirect("/");
+}
 
 // export async function createJob(data: z.infer<typeof jobSchema>) {
 //   const user = await requireUser();
