@@ -6,7 +6,7 @@ import { companySchema, jobSchema, jobSeekerSchema } from "./utils/zodSchemas";
 import { prisma } from "./utils/db";
 import { redirect } from "next/navigation";
 // import { stripe } from "./utils/stripe";
-// import { jobListingDurationPricing } from "./utils/pricingTiers";
+import { jobListingDurationPricing } from "./utils/pricingTiers";
 import { revalidatePath } from "next/cache";
 import arcjet, { detectBot, shield } from "./utils/arcjet";
 import { request } from "@arcjet/next";
@@ -87,27 +87,27 @@ export async function createJobSeeker(data: z.infer<typeof jobSeekerSchema>) {
 }
 
 export async function createJob(data: z.infer<typeof jobSchema>) {
-  // const user = await requireUser();
+  const user = await requireUser();
 
-  // const validatedData = jobSchema.parse(data);
+  const validatedData = jobSchema.parse(data);
 
-  // const company = await prisma.company.findUnique({
-  //   where: {
-  //     userId: user.id,
-  //   },
-  //   select: {
-  //     id: true,
-  //     user: {
-  //       select: {
-  //         stripeCustomerId: true,
-  //       },
-  //     },
-  //   },
-  // });
+  const company = await prisma.company.findUnique({
+    where: {
+      userId: user.id,
+    },
+    select: {
+      id: true,
+      // user: {
+      //   select: {
+      //     // stripeCustomerId: true,
+      //   },
+      // },
+    },
+  });
 
-  // if (!company?.id) {
-  //   return redirect("/");
-  // }
+  if (!company?.id) {
+    return redirect("/");
+  }
 
   // let stripeCustomerId = company.user.stripeCustomerId;
 
@@ -126,21 +126,21 @@ export async function createJob(data: z.infer<typeof jobSchema>) {
   //   });
   // }
 
-  // const jobPost = await prisma.jobPost.create({
-  //   data: {
-  //     companyId: company.id,
-  //     jobDescription: validatedData.jobDescription,
-  //     jobTitle: validatedData.jobTitle,
-  //     employmentType: validatedData.employmentType,
-  //     location: validatedData.location,
-  //     salaryFrom: validatedData.salaryFrom,
-  //     salaryTo: validatedData.salaryTo,
-  //     listingDuration: validatedData.listingDuration,
-  //     benefits: validatedData.benefits,
-  //   },
-  // });
+  const jobPost = await prisma.jobPost.create({
+    data: {
+      companyId: company.id,
+      jobDescription: validatedData.jobDescription,
+      jobTitle: validatedData.jobTitle,
+      employmentType: validatedData.employmentType,
+      location: validatedData.location,
+      salaryFrom: validatedData.salaryFrom,
+      salaryTo: validatedData.salaryTo,
+      listingDuration: validatedData.listingDuration,
+      benefits: validatedData.benefits,
+    },
+  });
 
-  // // Trigger the job expiration function
+  // Trigger the job expiration function
   // await inngest.send({
   //   name: "job/created",
   //   data: {
@@ -188,76 +188,76 @@ export async function createJob(data: z.infer<typeof jobSchema>) {
   return redirect('/');
 }
 
-// export async function updateJobPost(
-//   data: z.infer<typeof jobSchema>,
-//   jobId: string
-// ) {
-//   const user = await requireUser();
+export async function updateJobPost(
+  data: z.infer<typeof jobSchema>,
+  jobId: string
+) {
+  const user = await requireUser();
 
-//   const validatedData = jobSchema.parse(data);
+  const validatedData = jobSchema.parse(data);
 
-//   await prisma.jobPost.update({
-//     where: {
-//       id: jobId,
-//       company: {
-//         userId: user.id,
-//       },
-//     },
-//     data: {
-//       jobDescription: validatedData.jobDescription,
-//       jobTitle: validatedData.jobTitle,
-//       employmentType: validatedData.employmentType,
-//       location: validatedData.location,
-//       salaryFrom: validatedData.salaryFrom,
-//       salaryTo: validatedData.salaryTo,
-//       listingDuration: validatedData.listingDuration,
-//       benefits: validatedData.benefits,
-//     },
-//   });
+  await prisma.jobPost.update({
+    where: {
+      id: jobId,
+      company: {
+        userId: user.id,
+      },
+    },
+    data: {
+      jobDescription: validatedData.jobDescription,
+      jobTitle: validatedData.jobTitle,
+      employmentType: validatedData.employmentType,
+      location: validatedData.location,
+      salaryFrom: validatedData.salaryFrom,
+      salaryTo: validatedData.salaryTo,
+      listingDuration: validatedData.listingDuration,
+      benefits: validatedData.benefits,
+    },
+  });
 
-//   return redirect("/my-jobs");
-// }
+  return redirect("/my-jobs");
+}
 
-// export async function deleteJobPost(jobId: string) {
-//   const user = await requireUser();
+export async function deleteJobPost(jobId: string) {
+  const user = await requireUser();
 
-//   await prisma.jobPost.delete({
-//     where: {
-//       id: jobId,
-//       company: {
-//         userId: user.id,
-//       },
-//     },
-//   });
+  await prisma.jobPost.delete({
+    where: {
+      id: jobId,
+      company: {
+        userId: user.id,
+      },
+    },
+  });
 
-//   return redirect("/my-jobs");
-// }
+  return redirect("/my-jobs");
+}
 
-// export async function saveJobPost(jobId: string) {
-//   const user = await requireUser();
+export async function saveJobPost(jobId: string) {
+  const user = await requireUser();
 
-//   await prisma.savedJobPost.create({
-//     data: {
-//       jobId: jobId,
-//       userId: user.id as string,
-//     },
-//   });
+  await prisma.savedJobPost.create({
+    data: {
+      jobId: jobId,
+      userId: user.id as string,
+    },
+  });
 
-//   revalidatePath(`/job/${jobId}`);
-// }
+  revalidatePath(`/job/${jobId}`);
+}
 
-// export async function unsaveJobPost(savedJobPostId: string) {
-//   const user = await requireUser();
+export async function unsaveJobPost(savedJobPostId: string) {
+  const user = await requireUser();
 
-//   const data = await prisma.savedJobPost.delete({
-//     where: {
-//       id: savedJobPostId,
-//       userId: user.id as string,
-//     },
-//     select: {
-//       jobId: true,
-//     },
-//   });
+  const data = await prisma.savedJobPost.delete({
+    where: {
+      id: savedJobPostId,
+      userId: user.id as string,
+    },
+    select: {
+      jobId: true,
+    },
+  });
 
-//   revalidatePath(`/job/${data.jobId}`);
-// }
+  revalidatePath(`/job/${data.jobId}`);
+}
